@@ -128,7 +128,7 @@ const CATEGORIES: Category[] = [
   {
     name: 'Install',
     color: '#9A9A96',
-    match: /\b(pip3? install|uv (pip|sync|add)|poetry install|conda (install|create|env)|npm (i|install|ci)|pnpm (i|install)|yarn( install)?|brew install|apt(-get)? install|cargo install)\b/i,
+    match: /\b(pip3? install|uv (pip|sync|add)|poetry install|conda (install|create)|npm (i|install|ci)|pnpm (i|install)|yarn( install)?|brew install|apt(-get)? install|cargo install)\b/i,
     tags: [
       [/pip|uv |poetry/i, 'python'],
       [/conda/i, 'conda'],

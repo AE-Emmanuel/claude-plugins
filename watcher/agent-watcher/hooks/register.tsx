@@ -100,8 +100,8 @@ const CRAB_CSS = `<style>
 </style>`
 
 const crab = (x: number, y: number, accent: string, isWalking: boolean, scale: number) => {
-  const px = (cx: number, cy: number, w: number, h: number, c: string) =>
-    `<rect x="${cx}" y="${cy}" width="${w}" height="${h}" fill="${c}"/>`
+  const px = (cx: number, cy: number, w: number, ht: number, c: string) =>
+    `<rect x="${cx}" y="${cy}" width="${w}" height="${ht}" fill="${c}"/>`
   const body = [
     px(7, 10, 16, 12, CLAY),
     px(3, 14, 4, 4, CLAY),

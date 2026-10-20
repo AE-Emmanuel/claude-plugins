@@ -26,7 +26,6 @@
       "default": ""
     }
   },
-  "icon": "./.claude-plugin/icon.png",
   "homepage": "https://github.com/AE-Emmanuel/claude-plugins",
   "repository": "https://github.com/AE-Emmanuel/claude-plugins",
   "license": "MIT"

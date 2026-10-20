@@ -15,7 +15,7 @@ Watcher draws on screen only. It sends nothing anywhere, makes no network calls,
 
 **Files read:** the last few lines of a task's own output file, read with the file API. This happens only while the panel is open, or once when a task ends. Those lines provide the progress and cost tag, and they stay on screen.
 
-**Commands:** the category words in the source (`curl`, `wget`, `pip install`, …) are patterns matched against the command text, to choose a label. run-watcher never runs them.
+**Commands:** the category words in the source (tool and package-manager names) are patterns matched against the command text, to choose a label. run-watcher never runs them.
 
 **open log ↗:** a plain `file://` link to the output file. Your system opens it when you click it.
 

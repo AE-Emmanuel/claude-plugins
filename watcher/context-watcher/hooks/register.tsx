@@ -43,7 +43,7 @@ const brighten = (hex: string, t: number) => {
     const c = (n >> shift) & 255
     return Math.round(c + (255 - c) * t).toString(16).padStart(2, '0')
   }
-  return `#${ch(16)}${ch(8)}${ch(0)}`
+  return '#' + ch(16) + ch(8) + ch(0)
 }
 
 const glowColor = (base: string, glowAt: number, now: number) => {
@@ -107,7 +107,7 @@ const fadeIn = (hex: string, age: number) => {
   const t = 1 - age / FADE_MS
   const n = parseInt(hex.slice(1), 16)
   const ch = (shift: number) => Math.round(((n >> shift) & 255) * (1 - t) + 0x55 * t).toString(16).padStart(2, '0')
-  return `#${ch(16)}${ch(8)}${ch(0)}`
+  return '#' + ch(16) + ch(8) + ch(0)
 }
 
 const step = (from: number, to: number) => (Math.abs(to - from) < 0.3 ? to : from + (to - from) * 0.25)
@@ -136,7 +136,7 @@ const tintOf = (name: string) => FAMILY_TINT[name.split(' ')[0] ?? ''] ?? CLAY
 // The main model first, then each other model a running agent uses, once each.
 const modelsInUse = (m: Meter) => [...new Set([m.model, ...Object.values(m.agentModels)].filter(Boolean).map(modelName))]
 
-const formatTokens = (n: number) =>
+const formatCount = (n: number) =>
   n >= 1_000_000 ? `${(n / 1_000_000).toFixed(1)}M` : n >= 1000 ? `${Math.round(n / 1000)}k` : `${n}`
 
 const resetsIn = (iso: string | null, now: number) => {
@@ -417,7 +417,7 @@ export const register: Register = (on, options) => {
     // The effort of whichever loop runs the model shown: the main loop's, or an agent's on it.
     const agentOnName = Object.keys(m.agentModels).find(id => modelName(m.agentModels[id] ?? '') === name && id in (m.agentEfforts ?? {}))
     const nameEffort = name === modelName(m.model) ? (m.effort ?? '') : agentOnName ? (m.agentEfforts?.[agentOnName] ?? '') : ''
-    const ctxDetail = m.contextTokens !== null && m.contextWindow ? `${formatTokens(m.contextTokens)} / ${formatTokens(m.contextWindow)}` : ''
+    const ctxDetail = m.contextTokens !== null && m.contextWindow ? `${formatCount(m.contextTokens)} / ${formatCount(m.contextWindow)}` : ''
     // Native text, not an image: it updates in place, so nothing flashes when a figure moves.
     // A card as wide as the prompt: the model and the context figures on top, the big context
     // bar across the whole width, then usage on its own thin line underneath.
