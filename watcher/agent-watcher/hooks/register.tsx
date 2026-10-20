@@ -21,9 +21,9 @@ const isPaused = atom({ plugin: 'agent-watcher', key: 'isPaused' } as const, fal
 // Each agent type gets a stable accent from this palette, picked by its name.
 const ACCENTS = ['#3FA7D6', '#E0A526', '#D65DB1', '#8F8CF4', '#3B9C5F', '#E0703A', '#5B8DEF']
 const accentOf = (type: string) => {
-  let h = 0
-  for (const c of type) h = (h * 31 + c.charCodeAt(0)) >>> 0
-  return ACCENTS[h % ACCENTS.length]
+  let hash = 0
+  for (const c of type) hash = (hash * 31 + c.charCodeAt(0)) >>> 0
+  return ACCENTS[hash % ACCENTS.length]
 }
 const DONE = '#3B9C5F'
 const FAILED = '#D0453F'

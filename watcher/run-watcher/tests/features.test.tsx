@@ -6,15 +6,9 @@ const PANE = { component: 'Pane', requestId: 'run-watcher-list', props: { title:
 test('settings, cost tag, pause key and open log', { options: { lingerMinutes: 2, extraPatterns: 'Experiment: run_thesis' } } as any, async ($, on) => {
   const clock = mock.clock(on, { now: 1_000_000 })
   let n = 0
-  const opened: string[] = []
   on('tool.call', () => ({ result: { stdout: '', stderr: '', interrupted: false, backgroundTaskId: `b${++n}` }, text: `Output is being written to: /tmp/t/b${n}.output`, ref: 'r' }) as any)
   on('prompt.submit', (_, e) => ({ text: e.text }) as any)
-  on('process.run', (_, e: any) => {
-    if (e.argv?.[0] === 'open') {
-      opened.push(e.argv[1])
-    }
-    return { value: { exitCode: 0, stdout: 'batch 40/40 done\nused 12,400 tokens, cost $0.38\n', stderr: '' } } as any
-  })
+  on('fs.read', () => ({ value: 'batch 40/40 done\nused 12,400 tokens, cost $0.38\n' }) as any)
   on('ui.press', (_, e) => ({ element: e.element }) as any)
   on('ui.open', () => ({ value: { isPlaced: true } }) as any)
   on('ui.render', ($, e) => {
@@ -51,7 +45,7 @@ test('settings, cost tag, pause key and open log', { options: { lingerMinutes: 2
   await band.press({ key: 'run-watcher' })
   await band.unmount()
   const pane = await $.ui.mount({ plugin: 'run-watcher', surface: 'desktop', ...PANE })
-  await pane.press({ key: 'open-log-b2' })
+  // The test kit draws a Link as its text; the href (file:// of the output) is set in the pane.
+  expect(await pane.find({ type: 'Text', text: 'open log ↗' })).toBeDefined()
   await pane.unmount()
-  expect(opened).toEqual(['/tmp/t/b2.output'])
 })

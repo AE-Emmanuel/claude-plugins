@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Band above the prompt showing the model, context fill and the 5-hour usage window while a prompt runs; hides itself 10 min after.",
   "author": {
-    "name": "Sam Emmanuel"
+    "name": "Sam Emmanuel",
+    "url": "https://github.com/AE-Emmanuel"
   },
-  "types": "./types/index.d.ts",
   "userConfig": {
     "lingerMinutes": {
       "type": "number",
@@ -19,5 +19,9 @@
       "description": "Show how fast the 5-hour window is being used.",
       "default": true
     }
-  }
+  },
+  "icon": "./.claude-plugin/icon.png",
+  "homepage": "https://github.com/AE-Emmanuel/claude-plugins",
+  "repository": "https://github.com/AE-Emmanuel/claude-plugins",
+  "license": "MIT"
 }

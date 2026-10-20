@@ -2,9 +2,9 @@
   "name": "agent-watcher",
   "version": "0.1.0",
   "description": "Band above the prompt showing running subagents, progress and tokens; hides itself 10 min after the last one finishes.",
-  "types": "./types/index.d.ts",
   "author": {
-    "name": "Sam Emmanuel"
+    "name": "Sam Emmanuel",
+    "url": "https://github.com/AE-Emmanuel"
   },
   "userConfig": {
     "lingerMinutes": {
@@ -19,5 +19,9 @@
       "description": "Agents shown above the prompt before the rest collapse into +N (1-4).",
       "default": 2
     }
-  }
+  },
+  "icon": "./.claude-plugin/icon.png",
+  "homepage": "https://github.com/AE-Emmanuel/claude-plugins",
+  "repository": "https://github.com/AE-Emmanuel/claude-plugins",
+  "license": "MIT"
 }

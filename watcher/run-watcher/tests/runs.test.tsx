@@ -15,9 +15,9 @@ test('background tasks: categories and tags, intro label, finish and fail, panel
       : ({ result: { stdout: 'ok', stderr: '', interrupted: false }, text: 'ok', ref: 'r' }) as any,
   )
   on('prompt.submit', (_, e) => ({ text: e.text }) as any)
-  on('process.run', () => {
+  on('fs.read', () => {
     reads++
-    return { value: { exitCode: 0, stdout: 'loading\nepoch 3/10 loss 0.41\n 45%|████▌     | 450/1000\n', stderr: '' } } as any
+    return { value: 'loading\nepoch 3/10 loss 0.41\n 45%|████▌     | 450/1000\n' } as any
   })
   on('ui.open', () => ({ value: { isPlaced: true } }) as any)
   on('ui.close', () => ({ value: undefined }) as any)

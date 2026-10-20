@@ -2,9 +2,9 @@
   "name": "run-watcher",
   "version": "0.1.0",
   "description": "Watcher: a band above the prompt for background tasks Claude starts (API calls, LLM runs, experiments, tests...), each with its category, tags and progress; output is read only when you expand it. Hides 10 min after the last one finishes.",
-  "types": "./types/index.d.ts",
   "author": {
-    "name": "Sam Emmanuel"
+    "name": "Sam Emmanuel",
+    "url": "https://github.com/AE-Emmanuel"
   },
   "userConfig": {
     "lingerMinutes": {
@@ -25,5 +25,9 @@
       "description": "Words that put a command in a category, e.g. \"Experiment: run_thesis; API calls: my_batch\".",
       "default": ""
     }
-  }
+  },
+  "icon": "./.claude-plugin/icon.png",
+  "homepage": "https://github.com/AE-Emmanuel/claude-plugins",
+  "repository": "https://github.com/AE-Emmanuel/claude-plugins",
+  "license": "MIT"
 }

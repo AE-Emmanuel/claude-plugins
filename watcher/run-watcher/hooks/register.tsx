@@ -20,6 +20,12 @@ const INTRO_MS = 1200
 const PANEL_REFRESH_MS = 3000
 const TAIL_LINES = 6
 
+// The last few non-blank lines of a task's output file, read directly (no program is started).
+async function lastLines($: { fs: { read: (path: string) => Promise<unknown> } }, path: string): Promise<string[] | null> {
+  const text = await $.fs.read(path).catch(() => null)
+  return typeof text === 'string' ? text.split('\n').filter(l => l.trim()).slice(-TAIL_LINES) : null
+}
+
 const rows = atom({ plugin: 'run-watcher', key: 'rows' } as const, [] as RunRow[])
 const tick = atom({ plugin: 'run-watcher', key: 'tick' } as const, 0)
 const isPanelOpen = atom({ plugin: 'run-watcher', key: 'isPanelOpen' } as const, false)
@@ -534,20 +540,6 @@ export const register: Register = (on, options) => {
     return result
   }).catch(($, e, next) => next(e)) // display only: a failure never blocks Claude Code
 
-  // "open log ↗" in the panel opens the task's output file in the default app.
-  on('ui.press', { plugin: 'run-watcher' }, async ($, e, next) => {
-    try {
-      if (e.element.startsWith('open-log-')) {
-        const id = e.element.slice('open-log-'.length)
-        const row = (await read($, rows)).find(r => r.id === id)
-        if (row?.outputPath) {
-          await $.process.run(['open', row.outputPath], { timeoutMs: 5000 }).catch(() => null)
-        }
-      }
-    } catch {}
-    return next(e)
-  }).catch(($, e, next) => next(e))
-
   on('ui.press', { element: 'watcher-pause' }, async ($, e, next) => {
     await update($, isPaused, () => true).catch(() => {})
     return next(e)
@@ -574,9 +566,9 @@ export const register: Register = (on, options) => {
           let tail = row.tail
           const file = path ?? row.outputPath
           if (file) {
-            const r = await $.process.run(['tail', '-n', String(TAIL_LINES), file], { timeoutMs: 2000 }).catch(() => null)
-            if (r && r.exitCode === 0) {
-              tail = r.stdout.split('\n').filter(l => l.trim())
+            const r = await lastLines($, file)
+            if (r) {
+              tail = r
             }
           }
           const percent = percentOf(tail)
@@ -618,9 +610,9 @@ export const register: Register = (on, options) => {
         for (const r of ended) {
           let tail = r.tail
           if (r.outputPath) {
-            const res = await $.process.run(['tail', '-n', String(TAIL_LINES), r.outputPath], { timeoutMs: 2000 }).catch(() => null)
-            if (res && res.exitCode === 0) {
-              tail = res.stdout.split('\n').filter(l => l.trim())
+            const res = await lastLines($, r.outputPath)
+            if (res) {
+              tail = res
             }
           }
           await update($, rows, xs => xs.map(x => (x.id === r.id ? { ...x, status: 'done' as RunRow['status'], endedAt: now, tail, percent: percentOf(tail) ?? 100 } : x)))
@@ -651,9 +643,9 @@ export const register: Register = (on, options) => {
         for (const r of ended) {
           let tail = r.tail
           if (r.outputPath) {
-            const res = await $.process.run(['tail', '-n', String(TAIL_LINES), r.outputPath], { timeoutMs: 2000 }).catch(() => null)
-            if (res && res.exitCode === 0) {
-              tail = res.stdout.split('\n').filter(l => l.trim())
+            const res = await lastLines($, r.outputPath)
+            if (res) {
+              tail = res
             }
           }
           await update($, rows, xs => xs.map(x => (x.id === r.id ? { ...x, status: 'done' as RunRow['status'], endedAt: now, tail, percent: percentOf(tail) ?? 100 } : x)))
@@ -705,9 +697,9 @@ export const register: Register = (on, options) => {
       const readTails = async () => {
         const list = await read($, rows)
         for (const r of list.filter(x => x.status === 'running' && x.outputPath)) {
-          const res = await $.process.run(['tail', '-n', String(TAIL_LINES), r.outputPath as string], { timeoutMs: 2000 }).catch(() => null)
-          if (res && res.exitCode === 0) {
-            const tail = res.stdout.split('\n').filter(l => l.trim())
+          const res = await lastLines($, r.outputPath)
+          if (res) {
+            const tail = res
             await update($, rows, xs => xs.map(x => (x.id === r.id ? { ...x, tail, percent: percentOf(tail) } : x)))
           }
         }
@@ -783,7 +775,7 @@ export const register: Register = (on, options) => {
     const { Box, Button, Text } = ui
 
     if (e.surface !== 'terminal' && 'Svg' in ui) {
-      const { Svg } = ui
+      const { Svg, Link } = ui
       const W = Math.max(240, Math.min(900, (e.props.bodyColumns || 40) * 8 - 8))
       return (
         <Box flexDirection="column">
@@ -794,7 +786,7 @@ export const register: Register = (on, options) => {
               <Box key={`pbody-${row.id}`} flexDirection="column" flexShrink={0}>
                 {row.outputPath ? (
                   <Box key={`plog-${row.id}`} flexDirection="row" justifyContent="flex-end">
-                    <Button key={`open-log-${row.id}`} label="open log ↗" plain onPress={() => {}} />
+                    <Link key={`open-log-${row.id}`} href={`file://${encodeURI(row.outputPath)}`} label="open log ↗" />
                   </Box>
                 ) : null}
                 <Svg key={`ptext-${row.id}`} source={paneTextSvg(W, row, now)} alt={`${row.category}: ${row.description}`} width={W - 44} height={58} />
