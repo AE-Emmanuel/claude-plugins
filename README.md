@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <b>Claude Code plugins by AE-Emmanuel</b><br>
+  <b>Claude Code plugins by Emmanuel</b><br>
   <img alt="version" src="https://img.shields.io/badge/version-0.1.0-D97757">
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-2.1.304%2B-1F1E1D">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-3B9C5F">
 </p>
 
-# 🦀 Watcher
+# Watcher
 
 Little crabs that keep an eye on things while Claude works. Watcher puts quiet, live bands above the prompt for **subagents**, **background runs** and **context**. They show up only while something is happening and tidy themselves away 10 minutes after.
 
@@ -55,11 +55,6 @@ Set these in `/plugin` → pick the plugin → **Configure**.
 | run-watcher | `extraPatterns`: your own category words, e.g. `Experiment: run_thesis; API calls: my_batch` | — |
 | context-watcher | `showUsagePace`: show pace against the 5-hour window | on |
 
-## 🎨 Design rules
-
-- Shows nothing unless it's relevant, and hides 10 minutes after activity.
-- No clutter, no "completed" text, no flicker.
-- Animations only breathe and twinkle. Real progress appears only when you open a panel.
 
 ## 💛 Credits & inspiration
 
