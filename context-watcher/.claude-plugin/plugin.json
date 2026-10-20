@@ -1,0 +1,23 @@
+{
+  "name": "context-watcher",
+  "version": "0.1.0",
+  "description": "Band above the prompt showing the model, context fill and the 5-hour usage window while a prompt runs; hides itself 10 min after.",
+  "author": {
+    "name": "Sam Emmanuel"
+  },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "lingerMinutes": {
+      "type": "number",
+      "title": "Linger (minutes)",
+      "description": "How long the card stays after a turn ends.",
+      "default": 10
+    },
+    "showUsagePace": {
+      "type": "boolean",
+      "title": "Usage pace",
+      "description": "Show how fast the 5-hour window is being used.",
+      "default": true
+    }
+  }
+}

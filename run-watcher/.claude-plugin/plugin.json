@@ -1,0 +1,29 @@
+{
+  "name": "run-watcher",
+  "version": "0.1.0",
+  "description": "Watcher: a band above the prompt for background tasks Claude starts (API calls, LLM runs, experiments, tests...), each with its category, tags and progress; output is read only when you expand it. Hides 10 min after the last one finishes.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Sam Emmanuel"
+  },
+  "userConfig": {
+    "lingerMinutes": {
+      "type": "number",
+      "title": "Linger (minutes)",
+      "description": "How long finished tasks stay before the band hides.",
+      "default": 10
+    },
+    "bandRows": {
+      "type": "number",
+      "title": "Band rows",
+      "description": "Tasks shown above the prompt before the rest collapse into +N (1-4).",
+      "default": 2
+    },
+    "extraPatterns": {
+      "type": "string",
+      "title": "Extra category patterns",
+      "description": "Words that put a command in a category, e.g. \"Experiment: run_thesis; API calls: my_batch\".",
+      "default": ""
+    }
+  }
+}
