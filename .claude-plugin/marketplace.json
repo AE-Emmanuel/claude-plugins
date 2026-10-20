@@ -1,28 +1,29 @@
 {
-  "name": "watcher",
+  "name": "ae-plugins",
   "owner": {
-    "name": "Sam Emmanuel"
+    "name": "Sam Emmanuel",
+    "url": "https://github.com/AE-Emmanuel"
   },
   "metadata": {
-    "description": "Watcher: quiet live bands above the Claude Code prompt for subagents, background runs and context/usage.",
+    "description": "Claude Code plugins by AE-Emmanuel. First up: Watcher, quiet live bands above the prompt for subagents, background runs and context/usage.",
     "version": "0.1.0"
   },
   "plugins": [
     {
       "name": "agent-watcher",
-      "source": "./agent-watcher",
+      "source": "./watcher/agent-watcher",
       "description": "Watcher: a band above the prompt and a panel showing running subagents with pixel Clawd crabs; hides 10 min after the last one finishes.",
       "version": "0.1.0"
     },
     {
       "name": "run-watcher",
-      "source": "./run-watcher",
+      "source": "./watcher/run-watcher",
       "description": "Watcher: background tasks Claude starts (API calls, LLM runs, experiments, tests...) with categories, tags and a glowing track; output read only when expanded.",
       "version": "0.1.0"
     },
     {
       "name": "context-watcher",
-      "source": "./context-watcher",
+      "source": "./watcher/context-watcher",
       "description": "Watcher: a card above the prompt with the model, a big context bar and 5-hour usage with pace while a prompt runs; hides 10 min after.",
       "version": "0.1.0"
     }
