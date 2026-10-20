@@ -42,7 +42,7 @@ const CATEGORIES: Category[] = [
   {
     name: 'API calls',
     color: '#D97757',
-    match: /\b(anthropic|openai|gemini|claude|gpt|mistral|cohere|groq|together|openrouter|bedrock|vertex|api|batch(es)?|requests|httpx|curl|http)\b|https?:\/\//i,
+    match: /\b(anthropic|openai|gemini|claude|gpt|mistral|cohere|groq|together|openrouter|bedrock|vertex|api|batch(es)?|requests|httpx|http)\b|https?:\/\//i,
     tags: [
       [/anthropic|claude/i, 'anthropic'],
       [/openai|gpt/i, 'openai'],
@@ -54,7 +54,6 @@ const CATEGORIES: Category[] = [
       [/generat|synth|complet/i, 'generate'],
       [/embed/i, 'embeddings'],
       [/scrap|crawl/i, 'scrape'],
-      [/\bcurl\b/i, 'curl'],
     ],
   },
   {
@@ -140,9 +139,9 @@ const CATEGORIES: Category[] = [
   {
     name: 'Data',
     color: '#3FA7D6',
-    match: /\b(download|wget|rsync|scp|aws s3|gsutil|huggingface-cli|hf download|preprocess\w*|etl|convert|extract|dataset|unzip|tar)\b/i,
+    match: /\b(download|rsync|scp|aws s3|gsutil|huggingface-cli|hf download|preprocess\w*|etl|convert|extract|dataset|unzip|tar)\b/i,
     tags: [
-      [/download|wget|huggingface|hf download/i, 'download'],
+      [/download|huggingface|hf download/i, 'download'],
       [/rsync|scp|s3|gsutil/i, 'sync'],
       [/preprocess|etl|convert|clean/i, 'preprocess'],
       [/unzip|tar|extract/i, 'extract'],
